@@ -41,10 +41,10 @@ class ProblemParser(HTMLParser):
         if tag == 'div':
             if attrs == [('class','input')]:
                 self.num_tests += 1
-                self.test_case = open(
+                self.test_case = io.open(
                     '%s%s%d' % (self.folder, '/input', self.num_tests), 'wb')
             elif attrs == [('class','output')]:
-                self.test_case = open(
+                self.test_case = io.open(
                     '%s%s%d' % (self.folder,'/output' ,self.num_tests), 'wb')
         elif tag == 'pre':
             if self.test_case != None:
@@ -69,6 +69,7 @@ class ProblemParser(HTMLParser):
     def handle_data(self, data):
         if self.start_copy:
             self.test_case.write(data.strip('\n').encode('utf-8'))
+            self.test_case.write('\n'.encode('utf-8'))
             self.end_line = False
 
 
